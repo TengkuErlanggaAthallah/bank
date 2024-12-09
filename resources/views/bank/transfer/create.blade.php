@@ -26,7 +26,7 @@
         </div>
         <div class="form-group">
             <label for="nominal">Nominal Transfer</label>
-            <input type="number" class="form-control" id="nominal" name="nominal" required>
+            <input type="number" class="form-control" id="nominal" name="nominal" required oninput="formatNominal(this)">
         </div>
         <div class="form-group">
             <label for="tanggal">Tanggal Transfer</label>
@@ -38,6 +38,13 @@
 
 @section('scripts')
 <script>
+    // Validasi input hanya angka
+    document.getElementById('nominal').addEventListener('input', function(e) {
+        var inputValue = e.target.value;
+        // Filter input untuk hanya menerima angka
+        e.target.value = inputValue.replace(/[^0-9]/g, '');
+    });
+
     document.getElementById('pengirim_id').addEventListener('change', function() {
         var selectedPengirimId = this.value;
         var penerimaSelect = document.getElementById('penerima_id');

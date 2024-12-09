@@ -31,25 +31,30 @@
         </div>
         <div class="mb-3">
             <label for="saldo">Saldo (IDR)</label>
-            <input type="text" name="saldo" id="saldo" class="form-control" required onkeyup="formatRupiah(this)">
+            <input type="text" name="saldo" id="saldo" class="form-control" required oninput="validateNumericInput(this)" onkeyup="formatRupiah(this)">
             <small class="form-text text-muted">Masukkan saldo dalam format angka.</small>
-        </div>
+        </div>        
         <button type="submit" class="btn btn-success">Simpan</button>
     </form>
 </div>
 
 <script>
+    // Fungsi untuk mencegah input selain angka
+    function validateNumericInput(input) {
+        input.value = input.value.replace(/[^0-9,]/g, '');
+    }
+
+    // Fungsi untuk format Rupiah
     function formatRupiah(input) {
-        // Remove non-numeric characters
         let value = input.value.replace(/[^,\d]/g, '').toString();
         let split = value.split(',');
         let integerPart = split[0];
         let decimalPart = split.length > 1 ? ',' + split[1] : '';
 
-        // Format the integer part with thousands separator
+        // Format bagian integer dengan separator ribuan
         integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
-        // Combine integer and decimal parts
+        // Gabungkan bagian integer dan desimal
         input.value = integerPart + decimalPart;
     }
 </script>

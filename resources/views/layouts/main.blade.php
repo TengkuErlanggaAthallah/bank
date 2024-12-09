@@ -84,6 +84,12 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('topup.create') }}" class="nav-link {{ request()->routeIs('topup.*') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-plus-circle"></i>
+                                <p>Top Up Saldo</p>
+                            </a>
+                        </li>
                         <!-- Menu Transfer -->
                         <li class="nav-item">
                             <a href="{{ route('transfer.index') }}" class="nav-link {{ request()->routeIs('transfer.*') ? 'active' : '' }}">

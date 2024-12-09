@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Akun;
 use App\Models\Nasabah;
+use App\Models\Transaksi;
+use App\Models\Transfer;
 use Illuminate\Http\Request;
 
 class AkunController extends Controller
@@ -12,6 +14,24 @@ class AkunController extends Controller
     {
         $akun = Akun::with('nasabah')->paginate(10); // Adjust the number as needed
         return view('bank.akun.index', compact('akun'));
+    }
+
+    public function show($id)
+    {
+        $akun = Akun::with(['nasabah', 'transaksi'])->findOrFail($id);
+        
+// Ambil semua transfer yang relevan berdasarkan nama pengirim dan penerima
+$transfers = Transfer::where('nama_pengirim', $akun->nasabah->nama)
+    ->orWhere('nama_penerima', $akun->nasabah->nama)
+    ->get();
+
+// Menghitung jumlah transfer per pengirim
+$jumlahTransferPerPengirim = Transfer::select('nama_pengirim', \DB::raw('count(*) as total'))
+    ->groupBy('nama_pengirim')
+    ->get()
+    ->keyBy('nama_pengirim');
+
+return view('bank.akun.show', compact('akun', 'jumlahTransferPerPengirim', 'transfers'));
     }
 
     public function create()

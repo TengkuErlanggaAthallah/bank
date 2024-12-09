@@ -30,6 +30,7 @@
                 <td>{{ number_format($a->saldo, 2, ',', '.') }}</td>
                 <td>
                     <a href="{{ route('akun.edit', $a->id) }}" class="btn btn-warning">Edit</a>
+                    <a href="{{ route('akun.show', $a->id) }}" class="btn btn-info">Detail</a>
                     <form action="{{ route('akun.destroy', $a->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
